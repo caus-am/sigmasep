@@ -1,15 +1,16 @@
 #!/bin/bash
 #
-#SBATCH --job-name=experiment.sh
-#SBATCH --output=experiment.txt
+#SBATCH --job-name=sigmasep
+#SBATCH --output=/dev/shm/jmooij1/sigmasep/log/sigmasep-%a.stdout
+#SBATCH --error=/dev/shm/jmooij1/sigmasep/log/sigmasep-%a.stderr
 #
 #SBATCH --ntasks=1
 #SBATCH --time=0
-#SBATCH --mem-per-cpu=10000
+#SBATCH --mem-per-cpu=1000
 #
 #SBATCH --array=1-300
 
-srun python experiment.py $SLURM_ARRAY_TASK_ID
+python experiment.py $SLURM_ARRAY_TASK_ID
 
 # Copyright (c) 2018  Joris M. Mooij
 # All rights reserved.

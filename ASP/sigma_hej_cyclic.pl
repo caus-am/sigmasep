@@ -24,6 +24,9 @@ ancestor(X,Y,J) :- th(X,Y,0,J,0), X!=Y, node(X), node(Y), set(J).
 ancestor(X,Y,J) :- ancestor(X,Z,J), ancestor(Z,Y,J), 
                    X!=Y, X!=Z, Y!=Z, 
                    node(X), node(Y), node(Z), set(J).
+% the following lines allow one to use (non)ancestral relations as input
+:- not th(X,Y,0,J,M), ancestor(X,Y,J), node(X), node(Y), set(J), X!=Y, set(M), M + 2**(X) + 2**(Y) == 2**(nrnodes)-1.
+:- th(X,Y,0,J,M), not ancestor(X,Y,J), node(X), node(Y), set(J), X!=Y, set(M), M + 2**(X) + 2**(Y) == 2**(nrnodes)-1.
 
 
 %%%%%%%%%% INTERVENTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,6 +126,16 @@ hh(X,Y,C,J,M) :- { hh(Z,X,Csub,J,M); hh(X,Z,Csub,J,M) } >= 1,
 hh(X,Y,C,J,M) :- { hh(Z,X,Csub,J,M); hh(X,Z,Csub,J,M) } >= 1,
                  th(Z,Y,Csub,J,M),
                  ancestor(Y,Z,J),
+                 X < Y,
+                 not ismember(C,X), not ismember(C,Y),
+                 not ismember(M,X), not ismember(M,Y),
+                 node(X),node(Y),node(Z),
+                 condition(Csub,Z,C,J,M).
+
+%% (anc of Z) X<--Z<->Y => X<->Y (sigma)
+hh(X,Y,C,J,M) :- { hh(Z,Y,Csub,J,M); hh(Y,Z,Csub,J,M) } >= 1,
+                 th(Z,X,Csub,J,M),
+                 ancestor(X,Z,J),
                  X < Y,
                  not ismember(C,X), not ismember(C,Y),
                  not ismember(M,X), not ismember(M,Y),

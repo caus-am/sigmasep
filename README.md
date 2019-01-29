@@ -1,6 +1,12 @@
 # sigmasep
 Code for UAI 2018 paper by Forré &amp; Mooij (causal discovery with mSCMs using sigma-separation)
 
+## Version
+v1.1 
+
+## ChangeLog
+- v1.1: bug fix (added one missing sigma-sep rule in sigma_hej_cyclic.pl)
+
 ## License
 This code is licensed under the BSD 2-clause license (see file LICENSE).
 

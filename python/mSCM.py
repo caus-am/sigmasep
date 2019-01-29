@@ -1,4 +1,4 @@
-# Copyright (c) 2018  Patrick Forré, Joris M. Mooij
+# Copyright (c) 2018  Patrick Forre, Joris M. Mooij
 # All rights reserved.
 #
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
