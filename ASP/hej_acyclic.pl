@@ -24,6 +24,9 @@ ancestor(X,Y,J) :- th(X,Y,0,J,0), X!=Y, node(X), node(Y), set(J).
 ancestor(X,Y,J) :- ancestor(X,Z,J), ancestor(Z,Y,J), 
                    X!=Y, X!=Z, Y!=Z, 
                    node(X), node(Y), node(Z), set(J).
+% the following lines allow one to use (non)ancestral relations as input
+:- not th(X,Y,0,J,M), ancestor(X,Y,J), node(X), node(Y), set(J), X!=Y, set(M), M + 2**(X) + 2**(Y) == 2**(nrnodes)-1.
+:- th(X,Y,0,J,M), not ancestor(X,Y,J), node(X), node(Y), set(J), X!=Y, set(M), M + 2**(X) + 2**(Y) == 2**(nrnodes)-1.
 
 % acyclicity
 :- ancestor(X,Y,0), ancestor(Y,X,0), node(X), node(Y), X!=Y.

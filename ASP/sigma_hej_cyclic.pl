@@ -1,4 +1,4 @@
-% Copyright (c) 2014-2018, Antti Hyttinen, Frederick Eberhardt, Matti Järvisalo, Joris M. Mooij
+% Copyright (c) 2014-2020, Antti Hyttinen, Frederick Eberhardt, Matti Järvisalo, Patrick Forré, Joris M. Mooij
 % All rights reserved.
 %
 % Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
@@ -94,9 +94,10 @@ th(X,Y,C,J,M) :- th(X,Z,Csub,J,M),
                  node(X),node(Y),
                  condition(Csub,Z,C,J,M).
 
-%% X-->Z-->Y (anc of Z) => X-->Y (sigma)
+%% X-->Z-->Y (Z~Y) => X-->Y (sigma)
 th(X,Y,C,J,M):- th(X,Z,Csub,J,M), th(Z,Y,Csub,J,M),
                  ancestor(Y,Z,J),
+		 ancestor(Z,Y,J),
                  X != Y,
                  not ismember(C,X), not ismember(C,Y),
                  not ismember(M,X), not ismember(M,Y),
@@ -122,30 +123,33 @@ hh(X,Y,C,J,M) :- { hh(Z,X,Csub,J,M); hh(X,Z,Csub,J,M) } >= 1,
                  node(X),node(Y),
                  condition(Csub,Z,C,J,M).
 
-%% X<->Z-->Y (anc of Z)  => X<->Y (sigma)
+%% X<->Z-->Y (Z~Y) => X<->Y (sigma)
 hh(X,Y,C,J,M) :- { hh(Z,X,Csub,J,M); hh(X,Z,Csub,J,M) } >= 1,
                  th(Z,Y,Csub,J,M),
                  ancestor(Y,Z,J),
+		 ancestor(Z,Y,J),
                  X < Y,
                  not ismember(C,X), not ismember(C,Y),
                  not ismember(M,X), not ismember(M,Y),
                  node(X),node(Y),node(Z),
                  condition(Csub,Z,C,J,M).
 
-%% (anc of Z) X<--Z<->Y => X<->Y (sigma)
+%% (X~Z) X<--Z<->Y => X<->Y (sigma)
 hh(X,Y,C,J,M) :- { hh(Z,Y,Csub,J,M); hh(Y,Z,Csub,J,M) } >= 1,
                  th(Z,X,Csub,J,M),
                  ancestor(X,Z,J),
+		 ancestor(Z,X,J),
                  X < Y,
                  not ismember(C,X), not ismember(C,Y),
                  not ismember(M,X), not ismember(M,Y),
                  node(X),node(Y),node(Z),
                  condition(Csub,Z,C,J,M).
 
-%% (anc of Z) X<--Z-->Y (anc of Z) => X<->Y (sigma)
+%% X<--Z-->Y (X~Z~Y) => X<->Y (sigma)
 hh(X,Y,C,J,M) :- th(Z,X,Csub,J,M), th(Z,Y,Csub,J,M),
-                 ancestor(X,Z,J),
+                 ancestor(X,Y,J),
                  ancestor(Y,Z,J),
+		 ancestor(Z,X,J),
                  X < Y,
                  not ismember(C,X), not ismember(C,Y),
                  not ismember(M,X), not ismember(M,Y),

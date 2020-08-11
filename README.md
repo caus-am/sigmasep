@@ -2,9 +2,10 @@
 Code for UAI 2018 paper by Forré &amp; Mooij (causal discovery with mSCMs using sigma-separation)
 
 ## Version
-v1.1 
+v1.2
 
 ## ChangeLog
+- v1.2: bug fix (replaced wrong directed edge tests by ancestor tests in some of the conditioning rules in sigma_hej_cyclic.pl to make the rules consistent with Def. 2.19 in the paper; thanks to Antti Hyttinen and Kari Rantanen for pointing out this bug)
 - v1.1: bug fix (added one missing sigma-sep rule in sigma_hej_cyclic.pl)
 
 ## License
@@ -20,7 +21,7 @@ When making significant use of this code for a scientific publication, please ci
       year      = 2018
     }
 
-A significant part of the code is based on the code accompanying the following paper:
+A considerable part of the code is based on the code accompanying the following paper:
 
     @inproceedings{Hyttinen++2014,
       author    = {Hyttinen, A. and Eberhardt, F. and J{\"{a}}rvisalo, M.},
